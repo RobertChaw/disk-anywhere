@@ -1,24 +1,29 @@
-## hooks-react-starter
+## Disk Anywhere 一个在线 U 盘
 
-Use this template:
+存储任何临时文件，支持断点续传
 
-```bash
-npx degit https://github.com/midwayjs/hooks/examples/react ./hooks-app
-```
+技术栈
 
-Use `npm install` to install the dependencies
+* Midway Hooks（前后端一体化）
+* React 前端框架
+* AntD
+* Tailwind
+* Blob 实现文件切割
+
+依赖安装
 
 ## Commands
 
-- `npm run dev`: Starts the development server
-- `npm run build`: Builds the application for production
-- `npm run start`: Runs the application in production mode
+- `pnpm i`: 依赖安装
+- `npm run dev`: 启动开发服务器
+- `npm run build`: 打包应用
+- `npm run start`: 运行打包后的文件
 
 ## File Structure
 
 - `src`: source code, include backend and frontend
-  - `api`: backend code
-  - `others`: frontend code
+    - `api`: backend code
+    - `others`: frontend code
 - `public`: static files
 - `midway.config.ts`: project config
 - `index.html`: entry file
