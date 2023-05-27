@@ -1,7 +1,7 @@
 {
-  "name": "hooks-react-starter",
+  "name": "disk-anywhere",
   "private": true,
-  "version": "3.0.1",
+  "version": "0.0.1",
   "scripts": {
     "start": "hooks start",
     "dev": "hooks dev",
