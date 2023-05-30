@@ -17,6 +17,7 @@
     "@midwayjs/serve": "^3.1.0",
     "@midwayjs/upload": "^3.11.6",
     "ahooks": "^3.1.2",
+    "dotenv": "^16.0.3",
     "isomorphic-unfetch": "^3.1.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0"
