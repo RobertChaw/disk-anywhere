@@ -4,6 +4,7 @@ import { useRequest } from "ahooks";
 import { getDate } from "./api/date";
 import fetchGithubStars from "./api/star";
 import { getBookByParams, getBookByQuery } from "./api/book";
+import "antd/dist/reset.css";
 import "./index.css";
 
 function App() {
