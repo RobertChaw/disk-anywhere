@@ -1,13 +1,11 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import { useRequest } from "ahooks";
 import { getDate } from "./api/date";
 import fetchGithubStars from "./api/star";
 import { getBookByParams, getBookByQuery } from "./api/book";
-import "antd/dist/reset.css";
-import "./index.css";
+import { Button } from "antd";
 
-function App() {
+export function Index() {
   const { data: date } = useRequest(() => getDate());
   const { data: repo, loading } = useRequest(() =>
     fetchGithubStars("midwayjs/midway")
@@ -54,8 +52,10 @@ function App() {
           <span>Book title: {book2?.title}</span>
         </p>
       </div>
+      <button className="rounded-md bg-sky-500 px-4 py-2 text-sm font-semibold text-white opacity-100 shadow-sm">
+        Button A
+      </button>
+      <Button type="primary">Primary Button</Button>
     </div>
   );
 }
-
-ReactDOM.render(<App />, document.getElementById("root"));
