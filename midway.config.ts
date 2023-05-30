@@ -1,4 +1,4 @@
-import react from "@vitejs/plugin-react";
+import react from "@vitejs/plugin-react-swc";
 import { defineConfig } from "@midwayjs/hooks-kit";
 
 export default defineConfig({
