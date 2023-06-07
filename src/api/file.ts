@@ -5,8 +5,9 @@ import path from "path";
 import { COSService } from "@midwayjs/cos";
 import { Context } from "@midwayjs/koa";
 import { prisma } from "./prisma";
-import { SIZE } from "../utils/uploadUtils";
+// import { SIZE } from "../utils/uploadUtils";
 
+const SIZE = 2 * 1024 * 1024;
 const basePath = "/var/lib/disk-anywhere/";
 const tempPath = "/var/lib/disk-anywhere/tmp";
 
@@ -77,7 +78,7 @@ export const mergeChunks = Api(Post("/api/merge"), async (hash: string) => {
       });
     })
   );
-    fs.rmdirSync(chunksDirPath);
+  fs.rmdirSync(chunksDirPath);
 });
 
 export const createLink = Api(

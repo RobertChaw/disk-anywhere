@@ -1,16 +1,5 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import {
-  createChunkList,
-  generateHash,
-  humanFileSize,
-  uploadFile,
-} from "../utils/uploadUtils";
+import React, { useEffect, useState } from "react";
+import { humanFileSize } from "../utils/uploadUtils";
 import { Progress, Typography } from "antd";
 import { FileFilled } from "../icons/FileFilled";
 import { Upload } from "./Upload";
