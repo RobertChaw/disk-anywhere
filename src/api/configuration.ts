@@ -1,6 +1,7 @@
 import { createConfiguration, hooks } from "@midwayjs/hooks";
 import * as Koa from "@midwayjs/koa";
 import * as cos from "@midwayjs/cos";
+import * as upload from "@midwayjs/upload";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -9,7 +10,7 @@ dotenv.config();
  * setup midway server
  */
 export default createConfiguration({
-  imports: [Koa, hooks(), cos],
+  imports: [Koa, hooks(), cos, upload],
   importConfigs: [
     {
       default: {
@@ -19,6 +20,10 @@ export default createConfiguration({
             SecretId: process.env.COS_SECRET_ID,
             SecretKey: process.env.COS_SECRET_KEY,
           },
+        },
+        upload: {
+          fileSize: "15mb",
+          whitelist: null,
         },
       },
     },

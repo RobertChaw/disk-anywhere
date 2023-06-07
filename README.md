@@ -14,12 +14,12 @@
 
 ## Commands
 
-- `pnpm i`: 依赖安装
+- `yarn`: 依赖安装
 - `npm run dev`: 启动开发服务器
 - `npm run build`: 打包应用
 - `npm run start`: 运行打包后的文件
 
-## File Structure
+## FileFilled Structure
 
 - `src`: source code, include backend and frontend
     - `api`: backend code

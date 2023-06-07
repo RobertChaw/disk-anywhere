@@ -7,3 +7,5 @@ build
 .idea
 logs
 .env
+prisma/migrations
+prisma/dev.db*

@@ -11,33 +11,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
-.app {
-    min-height: 100vh;
-    margin: 6rem 0;
-}
-
-.logo {
-    width: 300px;
-}
-
-.app {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.lambda {
-    display: inline-block;
-    box-sizing: border-box;
-    padding: 4px 8px;
-    background-color: #e3e3e3;
-    border-radius: 4px;
-    margin-right: 8px;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+:root{
+    background-color: #7BA23F;
 }

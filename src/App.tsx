@@ -4,11 +4,21 @@ import { Index } from "./index";
 import ReactDOM from "react-dom";
 import "antd/dist/reset.css";
 import "./index.css";
+import { Test } from "./test";
+import { File } from "./File";
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component: Index,
+  },
+  {
+    path: "/file/:id",
+    Component: File,
+  },
+  {
+    path: "/test",
+    Component: Test,
   },
 ]);
 
