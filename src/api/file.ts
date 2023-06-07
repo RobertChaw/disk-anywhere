@@ -77,7 +77,7 @@ export const mergeChunks = Api(Post("/api/merge"), async (hash: string) => {
       });
     })
   );
-  fs.rmdirSync(chunksDirPath);
+    fs.rmdirSync(chunksDirPath);
 });
 
 export const createLink = Api(
@@ -105,7 +105,6 @@ export const file = Api(
     const ctx = useContext<Context>();
     const { id } = ctx.params;
     const fileMeta = await prisma.file.findUnique({ where: { id } });
-    console.log("OK");
     return {
       fileName: fileMeta.name,
       id: fileMeta.id,

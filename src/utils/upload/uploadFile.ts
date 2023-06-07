@@ -1,5 +1,6 @@
 import { createLink, mergeChunks, verifyChunks } from "../../api/file";
 import { uploadChunk } from "./uploadChunk";
+import { createRequestQueue } from "./requestQueue";
 
 export async function uploadFile({
   hash,
@@ -29,7 +30,7 @@ export async function uploadFile({
   const existIndexes = new Set(
     existChunks.map((chunkName) => chunkName.split("-")[1])
   );
-  const taskList = chunkList.map(async (chunk, index) => {
+  const taskList = chunkList.map((chunk, index) => async () => {
     if (cancelRef.current) throw new Error("Upload Event Cancelled.");
     if (existIndexes.has(String(index))) {
       progressList[index] = 100;
@@ -50,7 +51,7 @@ export async function uploadFile({
     });
   });
 
-  await Promise.allSettled(taskList);
+  await createRequestQueue(taskList, 10);
   await mergeChunks(hash);
   return await createLink(hash, fileName);
 }
