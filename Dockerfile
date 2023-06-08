@@ -1,10 +1,9 @@
-FROM node:18 AS client
-
+FROM node:18
 WORKDIR /app
-COPY ./disk-anywhere .
+COPY . .
 RUN yarn
-RUN prisma generate
+RUN npx prisma migrate dev
+RUN npx prisma generate
 RUN npm run build
-
-
-
+EXPOSE 3000
+CMD ["npm","start"]

@@ -1,0 +1,13 @@
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - data:/var/lib/disk-anywhere
+      - db:/app/prisma
+      - log:/app/logs
+volumes:
+  data:
+  db:
+  log:
