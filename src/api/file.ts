@@ -123,6 +123,7 @@ export const downloadFile = Api(
     const { id } = ctx.params;
     const fileMeta = await prisma.file.findUnique({ where: { id } });
     ctx.attachment(fileMeta.name);
+    ctx.set("Content-Length", String(fileMeta.size));
     ctx.body = fs.createReadStream(path.join(basePath, fileMeta.hash));
   }
 );
