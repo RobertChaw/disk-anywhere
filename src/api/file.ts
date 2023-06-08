@@ -22,7 +22,8 @@ export const uploadChunk = Api(Upload("/api/upload"), async () => {
     fs.mkdirSync(dirPath, { recursive: true });
   }
   const tempFileName = path.join(dirPath, `${hash}-${index}`);
-  fs.renameSync(oldName, tempFileName);
+  fs.copyFileSync(oldName, tempFileName);
+  fs.unlinkSync(oldName);
 
   return {
     msg: "upload successfully",
