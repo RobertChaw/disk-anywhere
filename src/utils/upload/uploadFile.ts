@@ -1,20 +1,25 @@
 import { createLink, mergeChunks, verifyChunks } from "../../api/file";
 import { uploadChunk } from "./uploadChunk";
 import { createRequestQueue } from "./requestQueue";
+import { Controller } from "./Controller";
+import { AbortException } from "./AbortException";
 
 export async function uploadFile({
   hash,
   chunkList,
   fileName,
   onProgress,
-  cancelRef,
+  requestController,
 }: {
   hash: string;
   chunkList: Array<Blob>;
   fileName: string;
   onProgress: (percentage: number) => void;
-  cancelRef: { current: boolean };
+  requestController: Controller;
 }) {
+  let cancellation = false;
+  requestController.attach(() => (cancellation = true));
+
   const progressList: Array<number> = new Array(chunkList.length);
   progressList.fill(0);
   const { shouldUpload, existChunks } = await verifyChunks({
@@ -31,7 +36,7 @@ export async function uploadFile({
     existChunks.map((chunkName) => chunkName.split("-")[1])
   );
   const taskList = chunkList.map((chunk, index) => async () => {
-    if (cancelRef.current) throw new Error("Upload Event Cancelled.");
+    if (cancellation) throw new AbortException();
     if (existIndexes.has(String(index))) {
       progressList[index] = 100;
       return Promise.resolve();
@@ -41,7 +46,7 @@ export async function uploadFile({
       hash,
       index: String(index),
       onUploadProgress: (e) => {
-        if (cancelRef.current) return;
+        if (cancellation) return;
         progressList[index] = (e.loaded / e.total) * 100;
         const percentage = progressList.reduce((prv, cur) => {
           return prv + cur / progressList.length;

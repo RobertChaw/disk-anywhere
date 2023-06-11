@@ -6,6 +6,9 @@ import { File } from "../File";
 import { uploadFile } from "../utils/upload/uploadFile";
 import { useNavigate } from "react-router-dom";
 import * as url from "url";
+import { Controller } from "../utils/upload/Controller";
+import { message } from "antd";
+import { AbortException } from "../utils/upload/AbortException";
 
 export function useUpload({
   file,
@@ -15,7 +18,6 @@ export function useUpload({
   fileName: string;
 }) {
   const [progress, setProgress] = useState(0);
-  const cancelled = useRef(false);
   const [error, setError] = useState("");
   const [state, setState] = useState("");
   const [start, setStart] = useState(false);
@@ -41,45 +43,38 @@ export function useUpload({
     },
   });
 
+  const controller = useMemo(() => new Controller(), []);
   const { run } = useRequest(uploadFile, {
     manual: true,
-    // defaultParams: [
-    //   {
-    //     chunkList,
-    //     hash,
-    //     fileName,
-    //     onProgress: setProgress,
-    //     cancelRef: cancelled,
-    //   },
-    // ],
     onBefore: () => {
       setState("正在上传");
-      cancelled.current = false;
+      setError("");
     },
     onSuccess: (data) => {
       setState("上传成功");
+      message.success("上传成功,正在跳转到文件页面...", 3);
       setTimeout(() => {
         navigate(data.url);
       }, 3000);
     },
     onError: (e) => {
-      console.warn(e);
+      if (e instanceof AbortException) {
+        setError("上传已取消");
+        return;
+      }
       setError("上传错误");
     },
   });
 
   function handlePause() {
-    cancelled.current = true;
     setStart(false);
+    setError("上传已取消");
+    controller.abort();
   }
 
   function handleRun() {
     setStart(true);
   }
-
-  useEffect(() => {
-    console.log(`hash:${hash}`);
-  }, [hash]);
 
   useEffect(() => {
     if (start && !hashCalculating) {
@@ -88,7 +83,7 @@ export function useUpload({
         hash,
         fileName,
         onProgress: setProgress,
-        cancelRef: cancelled,
+        requestController: controller,
       });
     }
   }, [start, hashCalculating]);

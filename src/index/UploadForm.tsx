@@ -5,7 +5,7 @@ import { FileFilled } from "../icons/FileFilled";
 import { Upload } from "./Upload";
 import { ArrowOutlined } from "../icons/ArrowOutlined";
 import { useRequest } from "ahooks";
-import { useUpload } from "../hooks/upload";
+import { useUpload } from "../hooks/useUpload";
 
 export function UploadForm({}) {
   type UploadState = "WAITING_SELECT" | "WAITING_CONFIRM" | "UPLOADING";
@@ -22,7 +22,7 @@ export function UploadForm({}) {
 
   const [isPause, setIsPause] = useState(false);
   useEffect(() => {
-    setIsPause(true);
+    if (error) setIsPause(true);
   }, [error]);
 
   useEffect(() => {
@@ -31,9 +31,6 @@ export function UploadForm({}) {
 
   useEffect(() => {
     if (state === "WAITING_SELECT") setFile(null);
-    if (state === "WAITING_CONFIRM") {
-      pause();
-    }
   }, [state]);
 
   function handleUploadChange(file: File) {
@@ -49,6 +46,7 @@ export function UploadForm({}) {
 
   function handlePause() {
     setIsPause(true);
+    pause();
   }
 
   return (
@@ -103,21 +101,25 @@ export function UploadForm({}) {
         <section>
           <header className={"flex items-center justify-between gap-x-2"}>
             <h2 className={"text-2xl font-semibold"}>上传</h2>
-            <a
-              className={
-                "text-base font-semibold text-slate-500 hover:cursor-pointer hover:text-slate-900"
-              }
-              onClick={() => setState("WAITING_SELECT")}
-            >
-              返回
-            </a>
+            {/*<a*/}
+            {/*  className={*/}
+            {/*    "text-base font-semibold text-slate-500 hover:cursor-pointer hover:text-slate-900"*/}
+            {/*  }*/}
+            {/*  onClick={() => setState("WAITING_SELECT")}*/}
+            {/*>*/}
+            {/*  返回*/}
+            {/*</a>*/}
           </header>
           <div className={"flex flex-col items-center gap-3 py-5"}>
             <Progress
               percent={Number(progress.toFixed(1))}
               className={"mt-20"}
             />
-            {!error ? <p>{uploadState}</p> : <p>错误: {error}</p>}
+            {!error ? (
+              <p className={""}>{uploadState}</p>
+            ) : (
+              <p className={"text-red-500"}> {error}</p>
+            )}
             {!isPause ? (
               <button
                 onClick={handlePause}
