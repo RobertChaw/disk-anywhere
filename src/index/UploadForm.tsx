@@ -111,10 +111,10 @@ export function UploadForm({}) {
             {/*</a>*/}
           </header>
           <div className={"flex flex-col items-center gap-3 py-5"}>
-            <Progress
-              percent={Number(progress.toFixed(1))}
-              className={"mt-20"}
-            />
+            <Typography.Title level={5} style={{ marginTop: 100 }}>
+              {fileName}
+            </Typography.Title>
+            <Progress percent={Number(progress.toFixed(1))} />
             {!error ? (
               <p className={""}>{uploadState}</p>
             ) : (
